@@ -91,22 +91,90 @@
   <div id="cart-container"></div>
   <div class="total" id="total-price"></div>
 
-  <form id="checkout-form">
-    <h2>Checkout</h2>
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" name="name" required>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: white;
+    padding: 20px;
+  }
 
-    <label for="email">Your Email:</label>
-    <input type="email" id="email" name="email" required>
+  #checkout-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
 
-    <label for="phone">Your Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
+  #checkout-form h2 {
+    text-align: center;
+    color: #f4be39;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
 
-    <label for="message">Special Instructions:</label>
-    <textarea id="message" name="message" rows="4"></textarea>
+  #checkout-form label {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #f4be39;
+  }
 
-    <button type="submit">Place Order</button>
-  </form>
+  #checkout-form input,
+  #checkout-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #444;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+  }
+
+  #checkout-form input:focus,
+  #checkout-form textarea:focus {
+    outline: none;
+    border-color: #f4be39;
+  }
+
+  #checkout-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f4be39;
+    color: #222;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  #checkout-form button:hover {
+    background-color: #d39d27;
+  }
+</style>
+
+<form id="checkout-form">
+  <h2>Checkout</h2>
+
+  <label for="name">Your Name:</label>
+  <input type="text" id="name" name="name" required placeholder="Enter your full name">
+
+  <label for="email">Your Email:</label>
+  <input type="email" id="email" name="email" required placeholder="Enter your email address">
+
+  <label for="phone">Your Phone Number:</label>
+  <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+
+  <label for="message">Special Instructions:</label>
+  <textarea id="message" name="message" rows="4" placeholder="Enter any special instructions or requests"></textarea>
+
+  <button type="submit">Place Order</button>
+</form>
+
 
   <div class="back-buttons">
     <a href="/menu.html">Back to Main Menu</a>

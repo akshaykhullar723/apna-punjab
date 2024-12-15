@@ -1,4 +1,3 @@
-<!-- Menu Page (menu.html) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +45,16 @@
     .menu-item button:hover {
       background-color: #e1b15f;
     }
+    .quantity-controls button {
+      background-color: #444;
+      color: #fff;
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 4px;
+    }
+    .quantity-controls button:hover {
+      background-color: #888;
+    }
   </style>
 </head>
 <body>
@@ -53,22 +62,22 @@
   <div id="menu-container"></div>
   <a href="cart.html" class="go-to-cart-btn">Go to Cart</a>
 
-<style>
-  .go-to-cart-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #f4be39;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
+  <style>
+    .go-to-cart-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #f4be39;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
 
-  .go-to-cart-btn:hover {
-    background-color: #d39d27;
-  }
-</style>
+    .go-to-cart-btn:hover {
+      background-color: #d39d27;
+    }
+  </style>
 
   <script>
     const menu = [
@@ -117,29 +126,81 @@
 
         itemDiv.appendChild(itemDetails);
 
-        const addButton = document.createElement('button');
-        addButton.textContent = 'Add to Cart';
-        addButton.onclick = () => addToCart(item);
-        itemDiv.appendChild(addButton);
+        const quantityControls = document.createElement('div');
+        quantityControls.classList.add('quantity-controls');
+        
+        const minusButton = document.createElement('button');
+        minusButton.textContent = '-';
+        minusButton.onclick = () => changeQuantity(item, -1);
+        quantityControls.appendChild(minusButton);
 
+        const quantityDisplay = document.createElement('span');
+        quantityDisplay.id = `quantity-${item.name}`;
+        quantityDisplay.textContent = '0';
+        quantityControls.appendChild(quantityDisplay);
+
+        const plusButton = document.createElement('button');
+        plusButton.textContent = '+';
+        plusButton.onclick = () => changeQuantity(item, 1);
+        quantityControls.appendChild(plusButton);
+
+        itemDiv.appendChild(quantityControls);
         sectionDiv.appendChild(itemDiv);
       });
 
       menuContainer.appendChild(sectionDiv);
     });
 
-    function addToCart(item) {
+    function changeQuantity(item, change) {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const existingItem = cart.find(cartItem => cartItem.name === item.name);
 
       if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        cart.push({ ...item, quantity: 1 });
+        existingItem.quantity += change;
+        if (existingItem.quantity <= 0) {
+          removeFromCart(item.name); // Remove item if quantity is 0 or less
+          showNotification(`${item.name} removed from cart!`);
+          return;
+        }
+      } else if (change > 0) {
+        cart.push({ ...item, quantity: change });
+        showNotification(`${item.name} added to cart!`);
       }
 
       localStorage.setItem('cart', JSON.stringify(cart));
-      alert(`${item.name} has been added to the cart!`);
+      updateQuantityDisplay(item);
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.position = 'fixed';
+      notification.style.top = '20px';
+      notification.style.right = '20px';
+      notification.style.padding = '10px';
+      notification.style.backgroundColor = '#333';
+      notification.style.color = '#fff';
+      notification.style.borderRadius = '5px';
+      notification.style.zIndex = '1000';
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => document.body.removeChild(notification), 500);
+      }, 2000); // Notification disappears after 2 seconds
+    }
+
+    function updateQuantityDisplay(item) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingItem = cart.find(cartItem => cartItem.name === item.name);
+      const quantityDisplay = document.getElementById(`quantity-${item.name}`);
+      quantityDisplay.textContent = existingItem ? existingItem.quantity : 0;
+    }
+
+    function removeFromCart(name) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart = cart.filter(item => item.name !== name);
+      localStorage.setItem('cart', JSON.stringify(cart));
     }
   </script>
 </body>
