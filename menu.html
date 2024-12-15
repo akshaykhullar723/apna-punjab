@@ -1,0 +1,146 @@
+<!-- Menu Page (menu.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #222;
+      color: white;
+      padding: 20px;
+    }
+    .menu-section {
+      margin-bottom: 30px;
+    }
+    .menu-section h2 {
+      color: #f4be39;
+      border-bottom: 2px solid #f4be39;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .menu-item {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-item div {
+      max-width: 70%;
+    }
+    .menu-item h4 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #f4be39;
+    }
+    .menu-item button {
+      background-color: #f4be39;
+      color: #222;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .menu-item button:hover {
+      background-color: #e1b15f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Our Menu</h1>
+  <div id="menu-container"></div>
+  <a href="cart.html" class="go-to-cart-btn">Go to Cart</a>
+
+<style>
+  .go-to-cart-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f4be39;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .go-to-cart-btn:hover {
+    background-color: #d39d27;
+  }
+</style>
+
+  <script>
+    const menu = [
+      {
+        category: "SALADS",
+        items: [
+          { name: "SALADE AU POULET", description: "Salade verte, poulet, concombre", price: 7.00 },
+          { name: "RAITA", description: "Yaourt nature avec concombre", price: 5.00 }
+        ]
+      },
+      {
+        category: "SOUPES",
+        items: [
+          { name: "RASAM SOUPE", description: "Soupe de lentilles", price: 6.50 },
+          { name: "CHICKEN SOUPE", description: "Soupe de poulet", price: 7.50 }
+        ]
+      }
+    ];
+
+    const menuContainer = document.getElementById('menu-container');
+
+    menu.forEach(section => {
+      const sectionDiv = document.createElement('div');
+      sectionDiv.classList.add('menu-section');
+
+      const sectionTitle = document.createElement('h2');
+      sectionTitle.textContent = section.category;
+      sectionDiv.appendChild(sectionTitle);
+
+      section.items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('menu-item');
+
+        const itemDetails = document.createElement('div');
+        const itemName = document.createElement('h4');
+        itemName.textContent = item.name;
+        itemDetails.appendChild(itemName);
+
+        const itemDescription = document.createElement('p');
+        itemDescription.textContent = item.description;
+        itemDetails.appendChild(itemDescription);
+
+        const itemPrice = document.createElement('p');
+        itemPrice.textContent = `${item.price.toFixed(2)} €`;
+        itemDetails.appendChild(itemPrice);
+
+        itemDiv.appendChild(itemDetails);
+
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add to Cart';
+        addButton.onclick = () => addToCart(item);
+        itemDiv.appendChild(addButton);
+
+        sectionDiv.appendChild(itemDiv);
+      });
+
+      menuContainer.appendChild(sectionDiv);
+    });
+
+    function addToCart(item) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingItem = cart.find(cartItem => cartItem.name === item.name);
+
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${item.name} has been added to the cart!`);
+    }
+  </script>
+</body>
+</html>
