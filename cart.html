@@ -67,6 +67,23 @@
     button[type="submit"]:hover {
       background-color: #e1b15f;
     }
+    .back-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .back-buttons a {
+      text-decoration: none;
+      color: #f4be39;
+      padding: 10px 20px;
+      background-color: #222;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .back-buttons a:hover {
+      background-color: #e1b15f;
+    }
   </style>
 </head>
 <body>
@@ -90,6 +107,11 @@
 
     <button type="submit">Place Order</button>
   </form>
+
+  <div class="back-buttons">
+    <a href="/menu.html">Back to Main Menu</a>
+    <a href="https://apna-punjab.vercel.app" target="_blank">Back to Apna Punjab</a>
+  </div>
 
   <script>
     function loadCart() {
