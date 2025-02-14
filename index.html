@@ -6,6 +6,8 @@
     <link rel="profile" href="//gmpg.org/xfn/11">
     <title>Apna Punjab - Best Restaurant</title>
     <meta name="robots" content="max-image-preview:large">
+
+
     <style>
       img:is([sizes="auto"i], [sizes^="auto,"i]) {
         contain-intrinsic-size: 3000px 1500px
@@ -127,6 +129,113 @@
     <link rel="stylesheet" id="elegant-font-css" href="css/BTTPwCx6qHuj.css" type="text/css" media="all">
     <link rel="stylesheet" id="wp-block-library-css" href="css/LlxDh4QVTI6L.css" type="text/css" media="all">
     <link rel="stylesheet" id="patiotime-theme-style-css" href="css/vHZRTp9r0xTT.css" type="text/css" media="all">
+
+    <style>
+      /* Fullscreen overlay for the popup */
+      .indianfestival-popup {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.85);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+      }
+
+      /* Firecracker animation container */
+      .indianfestival-fireworks {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          pointer-events: none;
+      }
+
+      /* Individual spark style */
+      .indianfestival-spark {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background: radial-gradient(circle, #FFD700, #FF4500);
+          border-radius: 50%;
+          animation: indianfestival-spark-animation 1.5s ease-out forwards;
+      }
+
+      /* Spark animation */
+      @keyframes indianfestival-spark-animation {
+          0% {
+              transform: scale(1);
+              opacity: 1;
+          }
+          100% {
+              transform: scale(0.5);
+              opacity: 0;
+          }
+      }
+
+      /* Popup content */
+      .indianfestival-content {
+          text-align: center;
+          color: #FFD700;
+          font-family: 'Georgia', serif;
+          z-index: 10000;
+          animation: indianfestival-zoomIn 1s ease-in-out;
+      }
+
+      .indianfestival-content h1 {
+          font-size: 3rem;
+          margin: 0;
+          padding: 10px 20px;
+          background: linear-gradient(90deg, #FF4500, #FFD700, #FF4500);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
+
+      .indianfestival-content p {
+          font-size: 1.5rem;
+          color: #FFF;
+          margin-top: 10px;
+      }
+
+      /* Zoom-in animation for popup content */
+      @keyframes indianfestival-zoomIn {
+          0% {
+              transform: scale(0);
+              opacity: 0;
+          }
+          100% {
+              transform: scale(1);
+              opacity: 1;
+          }
+      }
+
+      /* Close button style */
+      .indianfestival-close-btn {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: #FF4500;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 8px;
+          outline: none;
+          z-index: 10001; /* Ensure it's above all other elements */
+      }
+
+      .indianfestival-close-btn:hover {
+          background: #FF6347;
+      }
+  </style>
+
+
     <style id="patiotime-theme-style-inline-css" type="text/css">
       :root {
         --dark-bg-color: #0b0a08;
@@ -574,6 +683,59 @@
     </style>
   </head>
   <body data-rsssl="1" class="home page-template page page-id-4888 wp-custom-logo wp-embed-responsive elementor-default elementor-kit-5 elementor-page elementor-page-4888 page-template-template-wide-content page-template-template-wide-content-php pt-template-wide dark-color site-layout-fullwidth pt-form-underline theme-patiotime">
+    
+     <!-- Welcome Popup Section -->
+<div class="indianfestival-popup" id="indianfestival-popup">
+  <div class="indianfestival-fireworks" id="indianfestival-fireworks"></div>
+  <div class="indianfestival-content">
+      <h1>ਜੀ ਆਇਆ ਨੂ!</h1>
+      <p>ਅਪਣਾ ਪੰਜਾਬ ਵਿੱਚ ਸਵਾਗਤ ਹੈ!</p>
+  </div>
+  <button class="indianfestival-close-btn" id="indianfestival-close-btn">✖</button>
+</div>
+
+<script>
+    // Scoped Fireworks Animation
+    function createIndianFestivalSpark() {
+        const fireworkArea = document.getElementById('indianfestival-fireworks');
+        const spark = document.createElement('div');
+        spark.classList.add('indianfestival-spark');
+        const size = Math.random() * 10 + 5;
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+
+        spark.style.width = `${size}px`;
+        spark.style.height = `${size}px`;
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+
+        fireworkArea.appendChild(spark);
+
+        // Remove the spark after animation ends
+        setTimeout(() => {
+            spark.remove();
+        }, 1500);
+    }
+
+    // Generate sparks every 100ms
+    const indianFestivalInterval = setInterval(createIndianFestivalSpark, 100);
+
+    // Close Popup
+    function closeIndianFestivalPopup() {
+        document.getElementById('indianfestival-popup').style.display = 'none';
+        clearInterval(indianFestivalInterval);
+    }
+
+    // Attach event to close button
+    document.getElementById('indianfestival-close-btn').addEventListener('click', closeIndianFestivalPopup);
+
+    // Automatically close popup after 7 seconds
+    setTimeout(() => {
+        closeIndianFestivalPopup();
+    }, 7000);
+</script>
+
+    
     <div id="page">
       <header id="masthead" class="site-header overlap-header" data-sticky-status="disable">
         <link rel="stylesheet" id="elementor-post-490-css" href="css/MASPmqVvbn0n.css" type="text/css" media="all">
@@ -1261,24 +1423,24 @@
 						  </div>
 						</div>
 					  </section>
-					<section class="elementor-section elementor-top-section elementor-element elementor-element-custom about-us-section" data-id="custom" data-element_type="section" id="aboutus">
-						<div class="elementor-container elementor-column-gap-no">
-						  <div class="elementor-column elementor-col-100 elementor-top-column elementor-element about-us-column" data-id="custom-col" data-element_type="column">
-							<div class="elementor-widget-wrap">
-							  <div class="about-us-content">
-								<h1 class="patio-story">Apna-Punjab Histoire</h1>
-								<h2 class="about-us-heading">À propos de nous</h2>
-								<p class="about-us-text">Une ambiance chaleureuse et accueillante, une musique punjabi apaisante et des délices végétariens authentiques.Notre restaurant donne vie aux saveurs du Punjab à chaque bouchée.Découvrez l'essence de la tradition et du goût que vous chérirez pour toujours.</p>
-								<a href="#" class="discover-more">Découvrir plus</a>
-							  </div>
-							  <div class="about-us-images">
-								<img src="images/1.png" alt="Patio Bar Image 1" class="about-us-image">
-								<img src="images/2.png" alt="Patio Bar Image 2" class="about-us-image">
-							  </div>
-							</div>
-						  </div>
-						</div>
-					  </section>
+            <section class="elementor-section elementor-top-section elementor-element elementor-element-custom about-us-section" data-id="custom" data-element_type="section" id="aboutus">
+              <div class="elementor-container elementor-column-gap-no">
+                  <div class="elementor-column elementor-col-100 elementor-top-column elementor-element about-us-column" data-id="custom-col" data-element_type="column">
+                      <div class="elementor-widget-wrap">
+                          <div class="about-us-content">
+                              <h1 class="patio-story">Apna-Punjab Histoire</h1>
+                              <h2 class="about-us-heading">À propos de nous</h2>
+                              <p class="about-us-text">Imprégné de l'esprit des guerriers Sikhs et des Nihang Sikhs, notre restaurant offre bien plus que de la nourriture. Chaque plat est une célébration de l'héritage historique et culturel du Punjab. Avec une ambiance chaleureuse, une musique punjabi apaisante et des délices végétariens inspirés de la bravoure des Sikhs, nous vous invitons à goûter à l'authenticité et à la richesse de notre culture. Appréciez l'expérience de la tradition, des héros du Punjab et de l'hospitalité unique qui fait de notre restaurant un lieu où l'histoire rencontre la saveur.</p>
+                              <a href="#" class="discover-more">Découvrir plus</a>
+                          </div>
+                          <div class="about-us-images">
+                              <img src="images/1.png" alt="Patio Bar Image 1" class="about-us-image">
+                              <img src="images/2.png" alt="Patio Bar Image 2" class="about-us-image">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
 					  
 					  <style>
 					  .about-us-section {
@@ -1712,7 +1874,7 @@
 					  
 
 
-                    <section class="elementor-section elementor-top-section elementor-element elementor-element-ecd49a5 elementor-section-full_width elementor-section-height-min-height pt-parallax-on-scroll pt_scroll_y_80 elementor-section-height-default elementor-section-items-middle" data-id="ecd49a5" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" data-pt-parallax-y="80" style="background-image: none;" data-pt-background-image="https://patiotime.loftocean.com/demo2/wp-content/uploads/sites/2/2022/04/img-58.jpg">
+                    <section class="elementor-section elementor-top-section elementor-element elementor-element-ecd49a5 elementor-section-full_width elementor-section-height-min-height pt-parallax-on-scroll pt_scroll_y_80 elementor-section-height-default elementor-section-items-middle" data-id="ecd49a5" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" data-pt-parallax-y="80" style="background-image: none;" data-pt-background-image="images/vSGy5bTX6nyC.jpg">
                       <div class="elementor-background-overlay"></div>
                       <div class="elementor-container elementor-column-gap-default">
                         <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5d8bada" data-id="5d8bada" data-element_type="column">
