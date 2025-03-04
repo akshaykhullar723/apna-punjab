@@ -129,6 +129,88 @@
     <link rel="stylesheet" id="elegant-font-css" href="css/BTTPwCx6qHuj.css" type="text/css" media="all">
     <link rel="stylesheet" id="wp-block-library-css" href="css/LlxDh4QVTI6L.css" type="text/css" media="all">
     <link rel="stylesheet" id="patiotime-theme-style-css" href="css/vHZRTp9r0xTT.css" type="text/css" media="all">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+      /* Scoped CSS for the broadcast section only */
+      .broadcast-section {
+          font-family: "Poppins", sans-serif;
+          background: linear-gradient(135deg, #000, #222);
+          color: #FFD700;
+          padding: 20px;
+          border: 2px solid #FFD700;
+          border-radius: 12px;
+          max-width: 900px;
+          margin: 20px auto; /* Added small space above and below */
+          box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+          text-align: center;
+      }
+  
+      .broadcast-section h2 {
+          font-size: 24px;
+          font-weight: 600;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+          letter-spacing: 1px;
+      }
+  
+      .broadcast-section .dishes-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 15px;
+          padding: 10px;
+      }
+  
+      .broadcast-section .dish-card {
+          background: #FFD700;
+          color: #222;
+          border-radius: 12px;
+          padding: 12px;
+          text-align: center;
+          box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+          transition: transform 0.3s ease-in-out;
+      }
+  
+      .broadcast-section .dish-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6);
+      }
+  
+      .broadcast-section .dish-card img {
+          width: 100%;
+          height: 130px;
+          object-fit: cover;
+          border-radius: 8px;
+      }
+  
+      .broadcast-section .dish-card h3 {
+          font-size: 18px;
+          font-weight: 600;
+          margin: 10px 0;
+      }
+  
+      .broadcast-section .dish-card p {
+          font-size: 14px;
+          margin: 5px 0;
+      }
+  
+      @media (max-width: 600px) {
+          .broadcast-section .dishes-container {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 10px;
+          }
+  
+          .broadcast-section .dish-card {
+              padding: 10px;
+          }
+  
+          .broadcast-section .dish-card img {
+              height: 110px;
+          }
+      }
+  </style>
+  
+
 
     <style>
       /* Fullscreen overlay for the popup */
@@ -1060,6 +1142,9 @@
                         </div>
                       </div>
                     </section>
+
+                   
+
                     <section class="elementor-section elementor-top-section elementor-element elementor-element-621855c3 elementor-section-boxed elementor-section-height-default elementor-section-height-default" id="menu" data-id="621855c3" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
                       <div class="elementor-background-overlay"></div>
                       <div class="elementor-container elementor-column-gap-no">
@@ -1082,6 +1167,48 @@
                         </div>
                       </div>
                     </section>
+
+                    <section id="broadcast" class="broadcast-section">
+                      <h2>Plats spéciaux d'aujourd'hui</h2>
+                      <div class="dishes-container" id="dishes-list">
+                          <!-- Dishes will be dynamically added here -->
+                      </div>
+                  </section>
+              
+                  <script>
+                      async function fetchAvailableDishes() {
+                          fetch("https://my-backend-vf80.onrender.com/api/dishes")
+                              .then((res) => res.json())
+                              .then((dishes) => {
+                                  const availableDishes = dishes.filter((dish) => dish.available);
+                                  displayDishes(availableDishes);
+                              })
+                              .catch((error) => console.error("Error fetching dishes:", error));
+                      }
+              
+                      function displayDishes(dishes) {
+                          const dishesList = document.getElementById("dishes-list");
+                          dishesList.innerHTML = "";
+              
+                          dishes.forEach((dish) => {
+                              const dishCard = document.createElement("div");
+                              dishCard.classList.add("dish-card");
+              
+                              dishCard.innerHTML = `
+                                  <img src="${dish.image}" alt="${dish.name}">
+                                  <h3>${dish.name}</h3>
+                                  <p>${dish.description}</p>
+                                  <p><strong>Price: ₹${dish.price}</strong></p>
+                              `;
+              
+                              dishesList.appendChild(dishCard);
+                          });
+                      }
+              
+                      fetchAvailableDishes();
+                  </script>
+
+
                     <section class="elementor-section elementor-top-section elementor-element elementor-element-22e002b4 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="22e002b4" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
                       <div class="elementor-container elementor-column-gap-no">
                         <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6709b3f4" data-id="6709b3f4" data-element_type="column">
