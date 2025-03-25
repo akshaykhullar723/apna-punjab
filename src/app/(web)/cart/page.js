@@ -9,7 +9,7 @@ const Checkout = () => {
   const { cart } = useCart();
   console.log(cart, "cart");
   const [loading, setLoading] = useState(false);
-  const [orderType, setOrderType] = useState("takeaway");
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -37,15 +37,6 @@ const Checkout = () => {
   const validatePhone = (phone) => /^[0-9]{10}$/.test(phone);
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
-
-  const getOrderType = (type) => {
-    switch (type) {
-      case "takeaway":
-        return "À Emporter";
-      case "home-delivery":
-        return "Livraison à domicile";
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,7 +69,6 @@ const Checkout = () => {
           email,
           address,
           zipcode,
-          orderType: getOrderType(orderType),
         }),
       });
 
@@ -104,7 +94,7 @@ const Checkout = () => {
     .toFixed(2);
 
   return (
-    <div className="flex flex-col items-center justify-center p-5 text-white mt-[100px] md:h-screen w-full ">
+    <div className="flex flex-col items-center justify-center py-[50px] text-white  w-full bg-black/80">
       <h2 className="text-5xl mb-4 text-[#F4BE39] font-londrina">Checkout</h2>
 
       {cart.length ? (
@@ -171,36 +161,7 @@ const Checkout = () => {
               </tbody>
             </table>
           </div>
-          <div className="flex gap-4 items-center m-5">
-            <div>
-              {" "}
-              <img
-                src={"/assets/images/discount.gif"}
-                alt="takeaway"
-                className="w-[100px] h-8"
-              />
-              <span
-                onClick={() => setOrderType("takeaway")}
-                className={`cursor-pointer relative font-londrina ${
-                  orderType === "takeaway"
-                    ? "bg-[#F4BE39] p-2 text-black "
-                    : "text-white"
-                }`}
-              >
-                À Emporter
-              </span>
-            </div>
-            <span
-              onClick={() => setOrderType("home-delivery")}
-              className={`cursor-pointer font-londrina ${
-                orderType === "home-delivery"
-                  ? "bg-[#F4BE39] p-2 text-black "
-                  : "text-white"
-              }`}
-            >
-              Livraison à domicile
-            </span>
-          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-lg">
@@ -250,40 +211,39 @@ const Checkout = () => {
               />
             </div>
 
-            {orderType === "home-delivery" && (
-              <>
-                <div>
-                  <label htmlFor="address" className="block text-lg">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-[#F4BE39] rounded bg-transparent text-white"
-                    required
-                    placeholder="Your Address"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="zipcode" className="block text-lg">
-                    Zip Code
-                  </label>
-                  <input
-                    type="text"
-                    id="zipcode"
-                    name="zipcode"
-                    value={formData.zipcode}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-[#F4BE39] rounded bg-transparent text-white"
-                    required
-                    placeholder="Your Zip Code"
-                  />
-                </div>
-              </>
-            )}
+            <>
+              <div>
+                <label htmlFor="address" className="block text-lg">
+                  Address
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-[#F4BE39] rounded bg-transparent text-white"
+                  required
+                  placeholder="Your Address"
+                />
+              </div>
+              <div>
+                <label htmlFor="zipcode" className="block text-lg">
+                  Zip Code
+                </label>
+                <input
+                  type="text"
+                  id="zipcode"
+                  name="zipcode"
+                  value={formData.zipcode}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-[#F4BE39] rounded bg-transparent text-white"
+                  required
+                  placeholder="Your Zip Code"
+                />
+              </div>
+            </>
+
             {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
